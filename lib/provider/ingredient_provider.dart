@@ -44,6 +44,7 @@ class IngredientProvider with ChangeNotifier {
     }, onSuccess: (data) {
       _ingredients =
           data.map((item) => Ingredient.fromJson(item.toJson())).toList();
+      _ingredients.sort( (a,b) => b.useBy.compareTo(a.useBy));
       if (_ingredients.isEmpty) {
         _state = IngredientState.onEmpty;
       } else {
