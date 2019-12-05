@@ -5,19 +5,20 @@ class MyShimmer extends StatelessWidget {
   final EdgeInsets margin;
   final int itemCount;
 
-  MyShimmer({this.margin = const EdgeInsets.all(0), this.itemCount = 2});
+  MyShimmer({this.margin = const EdgeInsets.all(0), this.itemCount = 3});
+
+  final hlColor = Colors.grey.shade50;
+  final defColor = Colors.grey.shade200;
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Container(
+      margin: margin,
         child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        item(),
-        item(),
-      ],
+      children: List.generate(itemCount, (_) => item()).toList(),
     ));
   }
 
@@ -36,13 +37,13 @@ class MyShimmer extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                   child: Container(
                     margin: EdgeInsets.all(0),
-                    color: Colors.grey.shade300,
+                    color: defColor,
                   ),
                 ),
-                baseColor: Colors.grey.shade300,
-                highlightColor: Colors.white),
+                baseColor: defColor,
+                highlightColor: hlColor),
           ),
-          Padding(padding: EdgeInsets.only(top: 12)),
+          Padding(padding: EdgeInsets.only(right: 12)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -52,10 +53,10 @@ class MyShimmer extends StatelessWidget {
                 child: Shimmer.fromColors(
                     child: Container(
                       margin: EdgeInsets.all(0),
-                      color: Colors.grey.shade300,
+                      color: defColor,
                     ),
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.white),
+                    baseColor: defColor,
+                    highlightColor: hlColor),
               ),
               Padding(padding: EdgeInsets.only(top: 12)),
               Container(
@@ -64,10 +65,10 @@ class MyShimmer extends StatelessWidget {
                 child: Shimmer.fromColors(
                     child: Container(
                       margin: EdgeInsets.all(0),
-                      color: Colors.grey.shade300,
+                      color: defColor,
                     ),
-                    baseColor: Colors.grey.shade300,
-                    highlightColor: Colors.white),
+                    baseColor: defColor,
+                    highlightColor: hlColor),
               ),
             ],
           )
