@@ -1,6 +1,10 @@
+import 'package:tech_task/function/date.dart';
+
 class Ingredient {
   String title;
   String useBy;
+
+  String get formattedDate => formattedDateFromApi(useBy);
 
   Ingredient({this.title, this.useBy});
 
