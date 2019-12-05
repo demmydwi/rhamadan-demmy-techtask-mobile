@@ -8,7 +8,7 @@ import 'package:tech_task/model/recipe.dart';
 import 'api_component.dart';
 
 class ApiManager {
-  checkConnection() async {
+  static checkConnection() async {
     try {
       final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
@@ -21,7 +21,7 @@ class ApiManager {
     }
   }
 
-  request(
+  static request(
     String path, {
     Map<String, dynamic> queryParams,
     ValueChanged<dynamic> onSuccess,
@@ -43,7 +43,7 @@ class ApiManager {
     }
   }
 
-  getIngredients(
+  static getIngredients(
       {ValueChanged<String> onError,
       ValueChanged<List<Ingredient>> onSuccess}) async {
     request(ApiComponent.getIngredients, onSuccess: (dynamic result) {
@@ -55,7 +55,7 @@ class ApiManager {
     }, onError: onError);
   }
 
-  getRecipes(List<String> ingredients,
+  static getRecipes(List<String> ingredients,
       {ValueChanged<String> onError,
       ValueChanged<List<Recipe>> onSuccess}) async {
     String _ingredients = ingredients.join(",");
