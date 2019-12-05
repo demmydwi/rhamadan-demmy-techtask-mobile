@@ -32,9 +32,12 @@ class ApiManager {
       onError(ApiComponent.noNetworkMessage);
       return;
     }
+    print(path);
+    print(queryParams);
     try {
       dynamic response =
-          await Dio().request<dynamic>(path, queryParameters: queryParams);
+          await Dio().request<dynamic>(ApiComponent.baseUrl+path, queryParameters: queryParams);
+      print(response);
       onSuccess(response);
     } on DioError catch (error) {
       onError(error.message);
