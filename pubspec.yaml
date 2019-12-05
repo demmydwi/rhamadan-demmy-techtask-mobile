@@ -24,10 +24,29 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^0.1.2
 
+  # network
+  dio: any
+
+  # local preference
+  shared_preferences: any
+
+  # util
+  intl: any
+
+  # state management
+  provider: any
+
+  # router
+  fluro: any
+
+  # ui
+  pull_to_refresh: any
+  shimmer: any
+  loadmore: any
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
