@@ -35,10 +35,10 @@ class ApiManager {
     print(path);
     print(queryParams);
     try {
-      dynamic response =
+      Response<dynamic> response =
           await Dio().request<dynamic>(ApiComponent.baseUrl+path, queryParameters: queryParams);
-      print(response);
-      onSuccess(response);
+      print("response $response");
+      onSuccess(response.data);
     } on DioError catch (error) {
       onError(error.message);
     } catch (error) {
@@ -50,10 +50,15 @@ class ApiManager {
       {ValueChanged<String> onError,
       ValueChanged<List<Ingredient>> onSuccess}) async {
     request(ApiComponent.getIngredients, onSuccess: (dynamic result) {
+//      var listResult = result as List<dynamic>;
+//      print('listResult $listResult');
       if (result is List<dynamic>) {
+        print("result is list");
         List<Ingredient> ingredients =
             result.map((item) => Ingredient.fromJson(item)).toList();
         onSuccess(ingredients);
+      } else {
+        print("result is not list");
       }
     }, onError: onError);
   }
