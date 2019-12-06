@@ -13,6 +13,11 @@ class Ingredient {
     useBy = json['use-by'];
   }
 
+  add30DaysDateExp() {
+    DateTime _date = apiFormat.parse(useBy).add(Duration(days: 30));
+    this.useBy = apiFormat.format(_date);
+  }
+
   static List<Map<String, dynamic> > get mockData => [
     {"title": "Ham", "use-by": "2019-11-25"},
     {"title": "Cheese", "use-by": "2019-11-08"},
