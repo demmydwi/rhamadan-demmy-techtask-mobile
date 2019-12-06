@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_task/component/color.dart';
 import 'package:tech_task/provider/ingredient_provider.dart';
+import 'package:tech_task/provider/recipe_provider.dart';
 import 'package:tech_task/screen/launcher/launch_page.dart';
 
 void main() => runApp(MultiProvider(
@@ -9,6 +10,9 @@ void main() => runApp(MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => IngredientProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => RecipeProvider(),
         ),
       ],
     ));
