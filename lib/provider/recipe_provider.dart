@@ -6,7 +6,6 @@ import 'package:tech_task/network/api_manager.dart';
 import 'package:tech_task/provider/state.dart';
 
 class RecipeProvider with ChangeNotifier {
-
   List<Recipe> _recipes;
 
   List<Recipe> get recipes => _recipes;
@@ -38,12 +37,16 @@ class RecipeProvider with ChangeNotifier {
   getRecipes({List<Ingredient> ingredients, VoidCallback onSuccess}) async {
     state = ProviderState.onLoading;
     await Future.delayed(Duration(seconds: 1));
-    List<String> _strIngredient = ingredients.map( (item) => item.title ).toList();
+    List<String> _strIngredient =
+        ingredients.map((item) => item.title).toList();
     print(_strIngredient);
     ApiManager.getRecipes(_strIngredient, onError: (errMessage) {
       this.errMessage = errMessage;
     }, onSuccess: (data) {
       _recipes = data.map((item) => Recipe.fromJson(item.toJson())).toList();
+      var _ = _strIngredient.map((item) {
+        _recipes = _recipes.where((i) => i.ingredients.contains(item)).toList();
+      }).toList();
       if (_recipes.isEmpty) {
         _state = ProviderState.onEmpty;
       } else {
@@ -54,5 +57,4 @@ class RecipeProvider with ChangeNotifier {
       notifyListeners();
     });
   }
-
 }
