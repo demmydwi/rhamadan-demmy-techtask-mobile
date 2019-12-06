@@ -2,8 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:tech_task/model/ingredient.dart';
 import 'package:tech_task/network/api_manager.dart';
+import 'package:tech_task/provider/state.dart';
 
 class IngredientProvider with ChangeNotifier {
+  DateTime _selectedDate = DateTime.now();
+
+  DateTime get selectedDate => _selectedDate;
+
+  set selectedDate(DateTime newValue) {
+    this._selectedDate = newValue;
+    refresh();
+    notifyListeners();
+  }
+
   List<Ingredient> _ingredients;
 
   List<Ingredient> get ingredients => _ingredients;
@@ -13,11 +24,29 @@ class IngredientProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  IngredientState _state = IngredientState.onInit;
+  List<Ingredient> _selectedIngredients = [];
 
-  IngredientState get state => _state;
+  List<Ingredient> get selectedIngredients => _selectedIngredients;
 
-  set state(IngredientState newValue) {
+  set selectedIngredients(List<Ingredient> newValue) {
+    this._selectedIngredients = newValue;
+    notifyListeners();
+  }
+
+  void selectIngredient(Ingredient ingredient){
+    if (_selectedIngredients.contains(ingredient)) {
+      _selectedIngredients.remove(ingredient);
+    } else {
+      _selectedIngredients.add(ingredient);
+    }
+    notifyListeners();
+  }
+
+  ProviderState _state = ProviderState.onInit;
+
+  ProviderState get state => _state;
+
+  set state(ProviderState newValue) {
     this._state = newValue;
     notifyListeners();
   }
@@ -28,12 +57,12 @@ class IngredientProvider with ChangeNotifier {
 
   set errMessage(String newValue) {
     this._errMessage = newValue;
-    this._state = IngredientState.onError;
+    this._state = ProviderState.onError;
     notifyListeners();
   }
 
   refresh() {
-    _state = IngredientState.onInit;
+    _state = ProviderState.onInit;
     _ingredients = [];
     notifyListeners();
   }
@@ -44,11 +73,11 @@ class IngredientProvider with ChangeNotifier {
     }, onSuccess: (data) {
       _ingredients =
           data.map((item) => Ingredient.fromJson(item.toJson())).toList();
-      _ingredients.sort( (a,b) => b.useBy.compareTo(a.useBy));
+      _ingredients.sort((a, b) => b.useBy.compareTo(a.useBy));
       if (_ingredients.isEmpty) {
-        _state = IngredientState.onEmpty;
+        _state = ProviderState.onEmpty;
       } else {
-        _state = IngredientState.onLoaded;
+        _state = ProviderState.onLoaded;
       }
       print(data.length);
       notifyListeners();
@@ -56,4 +85,3 @@ class IngredientProvider with ChangeNotifier {
   }
 }
 
-enum IngredientState { onInit, onLoaded, onEmpty, onError }
