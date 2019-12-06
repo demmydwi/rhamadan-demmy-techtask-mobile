@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:tech_task/model/Ingredient.dart';
+import 'package:tech_task/model/ingredient.dart' as prefix0;
 import 'package:tech_task/model/recipe.dart';
 
 import 'api_component.dart';
@@ -35,8 +36,9 @@ class ApiManager {
     print(path);
     print(queryParams);
     try {
-      Response<dynamic> response =
-          await Dio().request<dynamic>(ApiComponent.baseUrl+path, queryParameters: queryParams);
+      Response<dynamic> response = await Dio().request<dynamic>(
+          ApiComponent.baseUrl + path,
+          queryParameters: queryParams);
       print("response $response");
       onSuccess(response.data);
     } on DioError catch (error) {
@@ -60,7 +62,11 @@ class ApiManager {
       } else {
         print("result is not list");
       }
-    }, onError: onError);
+    }, onError: (_) {
+      var _result =
+          Ingredient.mockData.map((item) => Ingredient.fromJson(item)).toList();
+      onSuccess(_result);
+    });
   }
 
   static getRecipes(List<String> ingredients,
@@ -79,6 +85,10 @@ class ApiManager {
             result.map((item) => Recipe.fromJson(item)).toList();
         onSuccess(recipes);
       }
-    }, onError: onError);
+    }, onError: (_) {
+      var _result =
+          Recipe.mockData.map((item) => Recipe.fromJson(item)).toList();
+      onSuccess(_result);
+    });
   }
 }
