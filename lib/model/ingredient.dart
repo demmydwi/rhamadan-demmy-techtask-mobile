@@ -39,4 +39,10 @@ class Ingredient {
     return data;
   }
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+          other is Ingredient &&
+              title == other.title;
+
 }

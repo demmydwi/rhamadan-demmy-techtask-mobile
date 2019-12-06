@@ -20,6 +20,9 @@ class Recipe {
     return data;
   }
 
+  String get ingredientsString =>
+      ingredients.isEmpty ? "" : ingredients.join(", ");
+
   static List<Map<String, dynamic>> get mockData => [
         {
           "title": "Ham and Cheese Toastie",
