@@ -19,4 +19,25 @@ class Recipe {
     data['ingredients'] = this.ingredients;
     return data;
   }
+
+  static List<Map<String, dynamic>> get mockData => [
+        {
+          "title": "Ham and Cheese Toastie",
+          "ingredients": ["Ham", "Cheese", "Bread", "Butter"]
+        },
+        {
+          "title": "Salad",
+          "ingredients": [
+            "Lettuce",
+            "Tomato",
+            "Cucumber",
+            "Beetroot",
+            "Salad Dressing"
+          ]
+        },
+        {
+          "title": "Hotdog",
+          "ingredients": ["Hotdog Bun", "Sausage", "Ketchup", "Mustard"]
+        }
+      ];
 }
