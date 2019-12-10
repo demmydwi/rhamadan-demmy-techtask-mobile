@@ -28,6 +28,7 @@ class _IngredientPageState extends MyState<IngredientPage> {
 
   Widget buildHeader(String selectedDate) {
     return Container(
+      key: ValueKey("ingredient_header"),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(4), border: Border.all()),
       height: 56,
@@ -89,11 +90,13 @@ class _IngredientPageState extends MyState<IngredientPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          key: ValueKey("ingredient_app_bar"),
           title: Text("Ingredients"),
         ),
         body: Consumer<IngredientProvider>(
           builder: (_, _provider, __) {
             return SafeArea(
+              key: ValueKey("ingredient_body"),
               child: Column(
                 children: <Widget>[
                   InkWell(
@@ -110,7 +113,7 @@ class _IngredientPageState extends MyState<IngredientPage> {
                     child:
                         buildHeader(userFormat.format(_provider.selectedDate)),
                   ),
-                  Expanded(child: buildContent(_provider)),
+                  Expanded(key: ValueKey("ingredient_content"),child: buildContent(_provider)),
                   buttonCheckRecipe(_provider.selectedIngredients)
                 ],
               ),
@@ -122,6 +125,7 @@ class _IngredientPageState extends MyState<IngredientPage> {
   Widget buttonCheckRecipe(List<Ingredient> _ingredients) {
     return Consumer<RecipeProvider>(builder: (_, _provider, __) {
       return Container(
+        key: ValueKey("ingredient_button"),
           height: 50,
           width: double.infinity,
           margin: const EdgeInsets.all(8.0),
