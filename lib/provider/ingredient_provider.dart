@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:tech_task/function/date.dart';
 import 'package:tech_task/model/ingredient.dart';
 import 'package:tech_task/network/api_manager.dart';
 import 'package:tech_task/provider/state.dart';
@@ -33,7 +34,7 @@ class IngredientProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void selectIngredient(Ingredient ingredient){
+  void selectIngredient(Ingredient ingredient) {
     if (_selectedIngredients.contains(ingredient)) {
       _selectedIngredients.remove(ingredient);
     } else {
@@ -67,12 +68,20 @@ class IngredientProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getIngredients() {
+  getIngredients({VoidCallback onCompleted}) async {
     ApiManager.getIngredients(onError: (errMessage) {
       this.errMessage = errMessage;
+      if (onCompleted != null) {
+        onCompleted();
+      }
     }, onSuccess: (data) {
-      _ingredients =
-          data.map((item) => Ingredient.fromJson(item.toJson())).toList();
+      _ingredients = data
+          .map((item) => Ingredient.fromJson(item.toJson())..add30DaysDateExp())
+          .toList()
+          .where((item) {
+        var ubDate = apiFormat.parse(item.useBy);
+        return ubDate.isAfter(selectedDate);
+      }).toList();
       _ingredients.sort((a, b) => b.useBy.compareTo(a.useBy));
       if (_ingredients.isEmpty) {
         _state = ProviderState.onEmpty;
@@ -81,7 +90,9 @@ class IngredientProvider with ChangeNotifier {
       }
       print(data.length);
       notifyListeners();
+      if (onCompleted != null) {
+        onCompleted();
+      }
     });
   }
 }
-

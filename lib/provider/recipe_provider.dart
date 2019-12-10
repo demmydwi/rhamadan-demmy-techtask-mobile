@@ -34,7 +34,7 @@ class RecipeProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  getRecipes({List<Ingredient> ingredients, VoidCallback onSuccess}) async {
+  getRecipes({List<Ingredient> ingredients, VoidCallback onSuccess, VoidCallback onCompleted}) async {
     state = ProviderState.onLoading;
     await Future.delayed(Duration(seconds: 1));
     List<String> _strIngredient =
@@ -42,6 +42,9 @@ class RecipeProvider with ChangeNotifier {
     print(_strIngredient);
     ApiManager.getRecipes(_strIngredient, onError: (errMessage) {
       this.errMessage = errMessage;
+      if (onCompleted != null) {
+        onCompleted();
+      }
     }, onSuccess: (data) {
       _recipes = data.map((item) => Recipe.fromJson(item.toJson())).toList();
       var _ = _strIngredient.map((item) {
@@ -55,6 +58,10 @@ class RecipeProvider with ChangeNotifier {
       print(data.length);
       onSuccess();
       notifyListeners();
+
+      if (onCompleted != null) {
+        onCompleted();
+      }
     });
   }
 }
