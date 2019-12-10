@@ -19,7 +19,7 @@ __Acceptance Criteria__
 __Additional Criteria__
 - [x] Fork this Flutter project as a base for your project.
 - [x] The application must have more than one screen and navigation (laucher page, ingredients page, and recipes page).
-- The application SHOULD contain unit / widget tests (e.g. using the flutter_test package).
+- [ ] The application SHOULD contain unit / widget tests (e.g. using the flutter_test package).
 - [x] The application MUST be completed using an OOP approach.
 - [x] Any dependencies MUST be installed using dependency management tools (Pub for Flutter).
 - [x] Any installation, build steps, testing and usage instructions MUST be provided in a `README.md`
